@@ -1,6 +1,6 @@
 [package]
 name = "turbo_ml_dhakshin"
-version = "0.1.12"
+version = "0.1.13"
 edition = "2021"
 authors = ["Kotha Dhakshin <dhakshinkotha2007@example.com>"]
 description = "High-performance ML primitives powered by Rust"
