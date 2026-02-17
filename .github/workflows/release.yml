@@ -3,60 +3,73 @@ name: Release to PyPI
 on:
   push:
     tags:
-      - 'v*'  # Triggers only on version tags like v0.1.13
+      - 'v*'
 
 permissions:
   contents: read
 
 jobs:
-  # 1. LINUX BUILD (The one that was failing)
   linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - uses: PyO3/maturin-action@v1
         with:
           manylinux: auto
           command: build
-          # -i python3.12 forces it to use Standard Python and ignore PyPy
-          args: --release --out dist --find-interpreter -i python3.12
+          # We removed "--find-interpreter" so it won't hunt for PyPy
+          args: --release --out dist 
+      
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
           name: wheels-linux
           path: dist
 
-  # 2. WINDOWS BUILD
   windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      
+      # 👇 THIS WAS MISSING! We must install Python on Windows
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: x64
+          
       - uses: PyO3/maturin-action@v1
         with:
           command: build
-          args: --release --out dist --find-interpreter -i python3.12
+          args: --release --out dist
+      
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
           name: wheels-windows
           path: dist
 
-  # 3. MACOS BUILD
   macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+      
+      # 👇 THIS WAS MISSING! We must install Python on Mac
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
       - uses: PyO3/maturin-action@v1
         with:
           command: build
-          args: --release --out dist --find-interpreter -i python3.12
+          args: --release --out dist
+      
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
           name: wheels-macos
           path: dist
 
-  # 4. PUBLISH TO PYPI (Runs only if all builds pass)
   release:
     name: Publish
     runs-on: ubuntu-latest
