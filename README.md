@@ -30,7 +30,7 @@ If you are looking for a fully mature ML framework, this may **not** yet be suit
 
 > ✅ If `py --list` shows Python **3.12**, installation is guaranteed to work.
 
-❌ **Not supported yet:**
+❌ **Not supported yet( Force Install is Supported ):**
 - Python **3.13**
 - Python **3.14+**
 
@@ -49,6 +49,17 @@ pip install turbo_ml
 
 If you are using Windows, Linux, or macOS with Python 3.8–3.12, this will install a **prebuilt binary wheel**.  
 You **do NOT** need Rust or a C/C++ compiler.
+
+---
+
+### Special Installation ( If facing any error to install )
+
+```bash
+export PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1
+pip install turbo-ml
+```
+
+If you are using Windows, Linux, or macOS with Python 3.13 & 3.14.
 
 ---
 
