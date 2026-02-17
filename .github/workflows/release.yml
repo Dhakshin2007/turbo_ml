@@ -13,14 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - uses: PyO3/maturin-action@v1
         with:
           manylinux: auto
           command: build
-          # We removed "--find-interpreter" so it won't hunt for PyPy
-          args: --release --out dist 
-      
+          args: --release --out dist
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -31,18 +28,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      
-      # 👇 THIS WAS MISSING! We must install Python on Windows
+      # We use 3.13 here to run the build tools, but the wheel stays py38-compatible
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13' 
           architecture: x64
-          
       - uses: PyO3/maturin-action@v1
         with:
           command: build
           args: --release --out dist
-      
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -53,17 +47,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      
-      # 👇 THIS WAS MISSING! We must install Python on Mac
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-          
+          python-version: '3.13'
       - uses: PyO3/maturin-action@v1
         with:
           command: build
           args: --release --out dist
-      
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -81,7 +71,6 @@ jobs:
           pattern: wheels-*
           path: dist
           merge-multiple: true
-      
       - uses: PyO3/maturin-action@v1
         with:
           command: upload
