@@ -1,0 +1,31 @@
+[package]
+name = "turbo_ml_dhakshin"
+version = "0.1.9"
+edition = "2021"
+authors = ["Kotha Dhakshin <dhakshinkotha2007@example.com>"]
+description = "High-performance ML primitives powered by Rust"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/Dhakshin2007/turbo_ml"
+
+[lib]
+# 👇 This is the Python import name
+name = "turbo_ml"
+crate-type = ["cdylib"]
+
+[dependencies]
+rayon = "1.8"
+
+# 🔥 THIS IS THE IMPORTANT PART
+[dependencies.pyo3]
+version = "0.20"
+features = [
+    "extension-module",
+    "abi3-py38"
+]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["maturin>=1.5,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "turbo_ml"
+dynamic = ["version"]
+description = "High-performance ML primitives powered by Rust"
+readme = "README.md"
+license = { text = "MIT" }
+
+# 🔴 THIS LINE SAVES YOUR SANITY
+requires-python = ">=3.8,<3.13"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Rust",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+tests = ["pytest"]
+
+[tool.maturin]
+python-source = "python"
+module-name = "turbo_ml.turbo_ml"
+features = ["pyo3/abi3-py38"]

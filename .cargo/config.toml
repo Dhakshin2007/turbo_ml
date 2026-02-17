@@ -1,0 +1,4 @@
+[build]
+# This flag enables AVX2/AVX-512 (Hardware Vectorization)
+# It tells the compiler to auto-vectorize your loops.
+rustflags = ["-C", "target-cpu=native"]
